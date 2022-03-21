@@ -9,8 +9,102 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
+
+
+    <!--
+        Maven is a dependency manager and build tool
+        There main packaging formats:
+            - jar file
+            - war file
+        Maven has a build lifecycle:
+            - mvn validate: validates that the project is a correct maven project structure
+            - mvn compile: compiles our source code to .class files
+            - mvn test: run all of our unit test
+            - mvn package: packages the project into a correct jar or war file.
+            - mvn verify: integration tests
+            - mvn install: makes project available for local maven dependencies
+            - mvn deploy: makes project available remote
+    -->
+
+    <build>
+        <plugins>
+            <plugin>
+                <!-- NOTE: We don't need a groupId specification because the group is
+                     org.apache.maven.plugins ...which is assumed by default.
+                 -->
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+
+                    <archive>
+                        <manifest>
+                            <mainClass>MainDriver</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!--alt insert -->
+        <!--postgresdriver-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.3.3</version>
+        </dependency>
+
+        <!--javalin-->
+        <dependency>
+            <groupId>io.javalin</groupId>
+            <artifactId>javalin</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.8.0-beta4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.8.0-beta4</version>
+        </dependency>
+
+        <!--jackson-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>4.3.1</version>
+        </dependency>
+
+
+    </dependencies>
 
 </project>
